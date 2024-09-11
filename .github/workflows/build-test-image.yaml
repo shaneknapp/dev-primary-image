@@ -40,6 +40,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: jupyterhub/repo2docker-action@master
         with:
+          FORCE_REPO2DOCKER_VERSION: jupyter-repo2docker==2024.07.0
           REPO_DIR: /srv/repo
           NO_PUSH: true
 
