@@ -81,7 +81,7 @@ what's been modified and check out the diffs:  `git status` and `git diff`.
 
 ### Building the image locally
 
-You should use [repo2-docker](https://repo2docker.readthedocs.io/en/latest/) to build and use/test the image on your own device before you push and create a PR.  It's better (and typically faster) to do this first before using CI/CD.  There's no need to waste Github Action minutes to test build images when you can do this on your own device!
+You should use [repo2docker](https://repo2docker.readthedocs.io/en/latest/) to build and use/test the image on your own device before you push and create a PR.  It's better (and typically faster) to do this first before using CI/CD.  There's no need to waste Github Action minutes to test build images when you can do this on your own device!
 
 Run `repo2docker` from inside the cloned image repo.  To run on a linux/WSL2 linux shell:
 ```
