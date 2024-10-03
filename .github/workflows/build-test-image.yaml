@@ -9,11 +9,6 @@ jobs:
     env:
       DOCKER_CONFIG: $HOME/.docker
     steps:
-      - name: cleanup disk space
-        run: |
-          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
-          df -h
-
       - name: Checkout files in repo
         uses: actions/checkout@v4
 
@@ -28,13 +23,11 @@ jobs:
             .github/**
             images/**
 
-      - name: What files changed?
+      - name: Cleanup disk space
         if: steps.changed-files.outputs.any_changed == 'true'
-        env:
-            CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-            echo "One or more image file(s) has changed:"
-            echo "$CHANGED_FILES"
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h
 
       - name: Build and test the image if any image file(s) changed
         if: steps.changed-files.outputs.any_changed == 'true'

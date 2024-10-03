@@ -14,11 +14,6 @@ jobs:
       image-tag: ${{ steps.build-and-push.outputs.IMAGE_SHA_TAG }}
 
     steps:
-      - name: Cleanup disk space
-        run: |
-          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
-          df -h
-
       - name: Check out the image repo
         uses: actions/checkout@v4
         with:
@@ -34,6 +29,12 @@ jobs:
             LICENSE
             .github/**
             images/**
+
+      - name: Cleanup disk space
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h
 
       - name: Log in to GAR
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -81,7 +82,6 @@ jobs:
           repository: 'berkeley-dsep-infra/datahub'
           sparse-checkout: |
             deployments/
-            hub/
   
       - name: Set git identity
         if: ${{ env.IMAGE_TAG }}
