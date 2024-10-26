@@ -70,16 +70,16 @@ git push origin main
 
 stateDiagram-v2
     image_repo: github.com/berkeley-dsep-infra/hubname-user-image
-    forked_repo: github.com/github-username/hubname-user-image
+    user_repo: github.com/username/hubname-user-image
     image_test_build: Image is built and tested
     image_push_build: Image is built and pushed to registry
-    pr_created: A pull request is automatically created in the Datahub repo
+    pr_created: A pull request is automatically<br/>created in the Datahub repo
     deploy_to_staging: Hub is deployed to staging
-    contributor_tests: The contributor logs into the staging hub and tests the image.
+    contributor_tests: The contributor logs into the<br/>staging hub and tests the image.
     deploy_to_prod: Hub is deployed to prod
 
-    image_repo --> forked_repo: Contributor forks the image repo.
-    forked_repo --> image_repo: Contributor creates a PR.
+    image_repo --> user_repo: Contributor forks the image repo.
+    user_repo --> image_repo: Contributor creates a PR.
     image_repo --> image_test_build
     image_test_build --> image_push_build: Test build passes and Datahub staff merge pull request
     image_push_build --> pr_created
