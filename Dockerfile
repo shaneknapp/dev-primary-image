@@ -34,8 +34,8 @@ RUN apt-get -qq update --yes && \
 # These packages must be installed into the base stage since they are in system
 # paths rather than /srv.
 # Pre-built R packages from rspm are built against system libs in jammy.
-ENV R_VERSION=4.4.1-1.2204.0
-ENV LITTLER_VERSION=0.3.19-1.2204.0
+ENV R_VERSION=4.4.2-1.2204.0
+ENV LITTLER_VERSION=0.3.20-2.2204.0
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" > /etc/apt/sources.list.d/cran.list
 RUN curl --silent --location --fail https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc > /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
