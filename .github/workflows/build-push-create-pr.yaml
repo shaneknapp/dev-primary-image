@@ -81,6 +81,14 @@ jobs:
       PRIVATE_KEY_SECRET: ${{ secrets.PRIVATE_KEY_SECRET}}
 
     steps:
+      - name: Checkout the image repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: 'berkeley-dsep-infra/dev-primary-image'
+          sparse-checkout: |
+            generate_pr_bot_token.py
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
