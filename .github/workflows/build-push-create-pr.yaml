@@ -77,13 +77,29 @@ jobs:
       HUB: ${{ vars.HUB }}
       IMAGE: ${{ vars.IMAGE }}
       IMAGE_TAG: ${{ needs.build-and-push.outputs.image-tag }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      PRIVATE_KEY_SECRET: ${{ secrets.PRIVATE_KEY_SECRET}}
 
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies for generate_pr_bot_token
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyJWT==2.10.1 requests==2.32.3 PyNaCl==1.5.0 cryptography==44.0.0
+
+      - name: Run generate_pr_bot_token Python script
+        run: |
+          python3 generate_pr_bot_token.py
+
       - name: Checkout the datahub repo
         if: ${{ env.IMAGE_TAG }}
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.DATAHUB_CREATE_PR }}
+          token: ${{ env.TOKEN }}
           fetch-depth: 0
           repository: 'berkeley-dsep-infra/datahub'
           sparse-checkout: |
@@ -108,7 +124,7 @@ jobs:
       - name: Create feature branch, add, commit, push changes and open a pull request
         if: ${{ env.IMAGE_TAG }}
         env:
-          GH_TOKEN: ${{ secrets.DATAHUB_CREATE_PR }}
+          GH_TOKEN: ${{ env.TOKEN }}
         run: |
           CHANGED_FILES=$(git status --porcelain -uno | awk '{print $2}')
           git diff
