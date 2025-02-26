@@ -110,11 +110,18 @@ jobs:
             sed -i -e "s,${IMAGE}:${old_hash},${IMAGE}:${new_hash},g" ${deployment}
             echo "Updated ${deployment} with new image tag ${new_hash}"
           done
-
-      - name: Create feature branch, add, commit, push changes and open a pull request
-        if: ${{ env.IMAGE_TAG }}
+      - name: Get GitHub App User ID
+        id: get-user-id
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+      
+      - run: |
+            git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+            git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+  
+      - name: Create feature branch, add, commit, push changes and open a pull request
+        if: ${{ env.IMAGE_TAG }}
         run: |
           CHANGED_FILES=$(git status --porcelain -uno | awk '{print $2}')
           git diff
