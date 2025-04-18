@@ -43,6 +43,7 @@ RUN apt-get update -qq --yes > /dev/null && \
     apt-get install --yes -qq \
         r-base-core=${R_VERSION} \
         r-base-dev=${R_VERSION} \
+        r-cran-littler=${LITTLER_VERSION} \
         littler=${LITTLER_VERSION} > /dev/null
 
 ENV RSTUDIO_URL=https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.04.2-764-amd64.deb
@@ -130,6 +131,8 @@ USER root
 #RUN /tmp/postBuild
 RUN rm -rf /tmp/*
 
+ENV REPO_DIR=/srv/repo
+COPY --chown=${NB_USER}:${NB_USER} image-tests ${REPO_DIR}/image-tests
 
 USER ${NB_USER}
 WORKDIR /home/${NB_USER}
