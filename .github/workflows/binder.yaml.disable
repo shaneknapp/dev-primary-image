@@ -11,6 +11,4 @@ jobs:
       pr_head_ref: ${{ github.event.pull_request.head.ref }}
       pr_head_userrepo: ${{ github.event.pull_request.head.repo.full_name }}
       pr_number: ${{ github.event.pull_request.number }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
