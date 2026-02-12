@@ -23,4 +23,3 @@ jobs:
     secrets:
       GAR_SECRET_KEY: ${{ secrets.GAR_SECRET_KEY }}
       PRIVATE_KEY_SECRET: ${{ secrets.PRIVATE_KEY_SECRET }}
-

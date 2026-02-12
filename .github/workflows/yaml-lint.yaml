@@ -5,4 +5,3 @@ on:
 jobs:
   call-shared-yaml-lint:
     uses: berkeley-dsep-infra/update-deployment/.github/workflows/shared-yaml-lint.yaml@main
-
